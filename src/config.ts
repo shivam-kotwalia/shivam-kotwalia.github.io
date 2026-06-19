@@ -9,7 +9,7 @@ export const site = {
   role: 'GenAI & ML Consultant | Ex-Meta, McKinsey',
   tagline:
     'I help businesses turn GenAI and analytics into measurable growth, faster decisions, and stronger products.',
-  bio: 'Strategy and data leader with 12+ years across fintech, consumer tech, and consulting. I partner with leadership teams to ship.',
+  bio: 'Strategy and data leader with 12+ years across fintech, consumer tech, and consulting.',
   url: 'https://shivam-kotwalia.github.io',
   email: '',
   location: 'India',

@@ -17,9 +17,10 @@ const dateFmt = new Intl.DateTimeFormat('en', {
 });
 
 const stats = [
-  { value: '12+', label: 'Years in AI & strategy' },
+  { value: '12+', label: 'Years in AI & Strategy' },
   { value: '10K+', label: 'Learners trained' },
-  { value: '4', label: 'Industries shipped in' },
+  { value: '50+', label: 'Startups adviced' },
+
 ];
 ---
 
@@ -32,7 +33,7 @@ const stats = [
           {site.role}
         </p>
         <h1 class="mt-6 text-5xl leading-[1.04] text-slate-900 sm:text-6xl lg:text-7xl dark:text-white">
-          Generative AI into <span class="italic text-brand-600 dark:text-brand-400">measurable</span> business impact.
+          Turning Generative AI into <span class="italic text-brand-600 dark:text-brand-400">measurable</span> business impact.
         </h1>
         <p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">
           {site.bio}
@@ -55,7 +56,7 @@ const stats = [
         </div>
 
         <p class="mt-8 text-xs uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">
-          Previously — Meta · McKinsey · PhonePe · Tide
+          Previously — Meta · McKinsey · PhonePe · Tide · Nagarro
         </p>
         <div class="mt-6"><SocialLinks /></div>
       </div>
@@ -93,7 +94,7 @@ const stats = [
 
   <section class="mx-auto grid max-w-6xl gap-6 px-4 pb-6 sm:px-6 lg:grid-cols-2">
     <div class="paper reveal p-6 sm:p-8" style="--stagger: 220ms;">
-      <h2 class="text-3xl text-slate-900 dark:text-white">What I focus on now</h2>
+      <h2 class="text-3xl text-slate-900 dark:text-white">What I focus on</h2>
       <ul class="mt-4 space-y-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         {focusAreas.map((area) => <li>• {area}</li>)}
       </ul>
@@ -112,20 +113,27 @@ const stats = [
 
   <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
     <h2 class="reveal text-3xl text-slate-900 dark:text-white" style="--stagger: 330ms;">Capabilities</h2>
-    <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="mt-6 grid gap-px overflow-hidden rounded-3xl border border-slate-200/80 bg-slate-200/70 sm:grid-cols-2 lg:grid-cols-3 dark:border-slate-800 dark:bg-slate-800">
       {
         skillGroups.map((group, index) => (
-          <div class="paper reveal p-5" style={`--stagger: ${360 + index * 70}ms;`}>
-            <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
+          <div
+            class="reveal flex flex-col bg-white/90 p-6 backdrop-blur dark:bg-slate-900/80"
+            style={`--stagger: ${360 + index * 70}ms;`}
+          >
+            <span class="font-mono text-xs text-brand-600 dark:text-brand-400">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <h3 class="mt-2 text-lg font-semibold text-slate-900 dark:text-white">
               {group.title}
             </h3>
-            <div class="mt-3 flex flex-wrap gap-2">
+            <ul class="mt-4 flex flex-1 flex-col gap-2.5">
               {group.skills.map((s) => (
-                <span class="rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                <li class="flex items-center gap-2.5 text-sm text-slate-600 dark:text-slate-300">
+                  <span class="h-1 w-1 shrink-0 rounded-full bg-brand-500"></span>
                   {s}
-                </span>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         ))
       }
@@ -136,7 +144,7 @@ const stats = [
     posts.length > 0 && (
       <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
         <div class="mb-4 flex items-center justify-between">
-          <h2 class="text-3xl text-slate-900 dark:text-white">Latest notes</h2>
+          <h2 class="text-3xl text-slate-900 dark:text-white">Latest Articles</h2>
           <a
             href="/blog"
             class="inline-flex items-center gap-1 text-sm font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-400"
