@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shivam-kotwalia.github.io/sitemap-index.xml

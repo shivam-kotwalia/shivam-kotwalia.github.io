@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220" />
+      <stop offset="1" stop-color="#141d57" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <circle cx="980" cy="120" r="280" fill="#1f47f5" opacity="0.25" />
+  <text x="80" y="300" font-family="Inter, system-ui, sans-serif" font-size="84" font-weight="800" fill="#ffffff">Shivam Kotwalia</text>
+  <text x="84" y="380" font-family="Inter, system-ui, sans-serif" font-size="40" font-weight="500" fill="#8eb6ff">Data Scientist &amp; AI Engineer</text>
+</svg>

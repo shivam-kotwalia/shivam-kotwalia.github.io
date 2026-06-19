@@ -1,0 +1,170 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { site, skillGroups, focusAreas } from '../config';
+
+// Latest 3 published posts
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const dateFmt = new Intl.DateTimeFormat('en', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+
+const stats = [
+  { value: '12+', label: 'Years in AI & strategy' },
+  { value: '10K+', label: 'Learners trained' },
+  { value: '4', label: 'Industries shipped in' },
+];
+---
+
+<BaseLayout>
+  <section class="relative mx-auto max-w-6xl px-4 pb-10 pt-16 sm:px-6 sm:pt-24">
+    <div class="grid items-center gap-12 lg:grid-cols-[1.25fr_0.75fr]">
+      <div class="reveal" style="--stagger: 40ms;">
+        <p class="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-brand-700 dark:text-brand-400">
+          <span class="h-px w-8 bg-brand-500"></span>
+          {site.role}
+        </p>
+        <h1 class="mt-6 text-5xl leading-[1.04] text-slate-900 sm:text-6xl lg:text-7xl dark:text-white">
+          Generative AI into <span class="italic text-brand-600 dark:text-brand-400">measurable</span> business impact.
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">
+          {site.bio}
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <a
+            href="/advisory"
+            class="group inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600 dark:bg-white dark:text-slate-900 dark:hover:bg-brand-400"
+          >
+            Work with me
+            <Icon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </a>
+          <a
+            href="/about"
+            class="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 underline-offset-4 hover:text-brand-600 hover:underline dark:text-slate-200 dark:hover:text-brand-400"
+          >
+            Read my story
+          </a>
+        </div>
+
+        <p class="mt-8 text-xs uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">
+          Previously — Meta · McKinsey · PhonePe · Tide
+        </p>
+        <div class="mt-6"><SocialLinks /></div>
+      </div>
+
+      <div class="reveal relative mx-auto w-full max-w-sm" style="--stagger: 140ms;">
+        <div class="absolute -inset-3 -z-10 rounded-[2.25rem] bg-gradient-to-br from-brand-200/60 via-transparent to-brand-100/40 blur-2xl dark:from-brand-900/40 dark:to-transparent"></div>
+        <img
+          src={site.avatar}
+          alt={site.name}
+          width="480"
+          height="600"
+          class="aspect-[4/5] w-full rounded-[1.75rem] border border-slate-200/80 object-cover shadow-xl dark:border-slate-800"
+        />
+        <div class="absolute -bottom-5 left-6 right-6 rounded-2xl border border-slate-200/80 bg-white/95 px-4 py-3 shadow-lg backdrop-blur dark:border-slate-800 dark:bg-slate-900/95">
+          <p class="text-sm font-semibold text-slate-900 dark:text-white">{site.name}</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400">GenAI · Strategy · Analytics</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-12 pt-6 sm:px-6">
+    <div
+      class="reveal grid grid-cols-3 divide-x divide-slate-200 rounded-3xl border border-slate-200/80 bg-white/80 py-7 backdrop-blur dark:divide-slate-800 dark:border-slate-800 dark:bg-slate-900/60"
+      style="--stagger: 220ms;"
+    >
+      {stats.map((s) => (
+        <div class="px-3 text-center sm:px-8">
+          <p class="text-4xl text-slate-900 sm:text-5xl dark:text-white">{s.value}</p>
+          <p class="mt-1 text-xs text-slate-500 sm:text-sm dark:text-slate-400">{s.label}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto grid max-w-6xl gap-6 px-4 pb-6 sm:px-6 lg:grid-cols-2">
+    <div class="paper reveal p-6 sm:p-8" style="--stagger: 220ms;">
+      <h2 class="text-3xl text-slate-900 dark:text-white">What I focus on now</h2>
+      <ul class="mt-4 space-y-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+        {focusAreas.map((area) => <li>• {area}</li>)}
+      </ul>
+    </div>
+    <div class="paper reveal p-6 sm:p-8" style="--stagger: 290ms;">
+      <h2 class="text-3xl text-slate-900 dark:text-white">From boardrooms to classrooms</h2>
+      <p class="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+        I work with leadership teams on AI strategy, and I also teach. Over time I have trained 10,000+ learners in Machine Learning and GenAI, with a strong focus on practical, implementation-first thinking.
+      </p>
+      <a href="/about" class="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-400">
+        More about my journey
+        <Icon name="arrow-right" class="h-4 w-4" />
+      </a>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <h2 class="reveal text-3xl text-slate-900 dark:text-white" style="--stagger: 330ms;">Capabilities</h2>
+    <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        skillGroups.map((group, index) => (
+          <div class="paper reveal p-5" style={`--stagger: ${360 + index * 70}ms;`}>
+            <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
+              {group.title}
+            </h3>
+            <div class="mt-3 flex flex-wrap gap-2">
+              {group.skills.map((s) => (
+                <span class="rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {
+    posts.length > 0 && (
+      <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+        <div class="mb-4 flex items-center justify-between">
+          <h2 class="text-3xl text-slate-900 dark:text-white">Latest notes</h2>
+          <a
+            href="/blog"
+            class="inline-flex items-center gap-1 text-sm font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-400"
+          >
+            View all
+            <Icon name="arrow-right" class="h-4 w-4" />
+          </a>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post, index) => (
+            <a
+              href={`/blog/${post.id}/`}
+              class="paper reveal group p-5 transition hover:-translate-y-0.5"
+              style={`--stagger: ${520 + index * 70}ms;`}
+            >
+              <time class="text-xs text-slate-500 dark:text-slate-400">
+                {dateFmt.format(post.data.pubDate)}
+              </time>
+              <h3 class="mt-2 text-lg text-slate-900 group-hover:text-brand-600 dark:text-white dark:group-hover:text-brand-400">
+                {post.data.title}
+              </h3>
+              <p class="mt-2 line-clamp-2 text-sm text-slate-600 dark:text-slate-300">
+                {post.data.description}
+              </p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

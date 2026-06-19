@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { advisoryTracks } from '../config';
+---
+
+<BaseLayout title="Advisory" description="GenAI, analytics, and growth advisory for leadership teams.">
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <div class="paper animate-fade-up p-6 sm:p-10">
+      <p class="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-brand-700 dark:text-brand-400">
+        <span class="h-px w-8 bg-brand-500"></span>
+        Advisory
+      </p>
+      <h1 class="mt-5 text-4xl leading-tight text-slate-900 sm:text-6xl dark:text-white">
+        Founder-style execution for <span class="italic text-brand-600 dark:text-brand-400">AI ambition</span>.
+      </h1>
+      <p class="mt-5 max-w-3xl text-base leading-relaxed text-slate-600 sm:text-lg dark:text-slate-300">
+        I work with leadership teams to turn AI strategy into shipped outcomes. The approach is practical, high-accountability, and designed for speed without sacrificing quality.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-8 sm:px-6">
+    <div class="grid gap-5 md:grid-cols-3">
+      {advisoryTracks.map((track) => (
+        <article class="paper p-6">
+          <h2 class="text-2xl text-slate-900 dark:text-white">{track.title}</h2>
+          <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{track.summary}</p>
+          <ul class="mt-4 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+            {track.outcomes.map((outcome) => (
+              <li>• {outcome}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <div class="paper bg-slate-900 p-8 text-white dark:bg-slate-100 dark:text-slate-900 sm:p-10">
+      <h2 class="text-3xl">Let’s discuss your GenAI roadmap</h2>
+      <p class="mt-3 max-w-2xl text-sm leading-relaxed text-slate-200 dark:text-slate-700">
+        If you are evaluating where AI can create real value in product, growth, or operations, send me a short context note and I will respond with next steps.
+      </p>
+      <a
+        id="email-cta"
+        href="#"
+        rel="nofollow"
+        class="mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 transition-colors hover:bg-slate-200 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-700"
+      >
+        Contact via email
+        <Icon name="arrow-up-right" class="h-4 w-4" />
+      </a>
+    </div>
+  </section>
+
+  <script is:inline>
+    const userCodes = [115, 104, 105, 118, 97, 109, 107, 111, 116, 119, 97, 108, 105, 97];
+    const hostCodes = [103, 109, 97, 105, 108, 46, 99, 111, 109];
+    const user = String.fromCharCode(...userCodes);
+    const host = String.fromCharCode(...hostCodes);
+    const email = `${user}@${host}`;
+    const link = document.getElementById('email-cta');
+    if (link) {
+      link.setAttribute('href', `mailto:${email}`);
+      link.setAttribute('aria-label', `Email ${email}`);
+      link.setAttribute('title', email);
+    }
+  </script>
+</BaseLayout>

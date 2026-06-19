@@ -1,42 +1,23 @@
 {
-  "name": "Jalpc",
-  "version": "1.1.1",
-  "description": "npm config file for Jalpc",
-  "main": "",
-  "scripts": {
-    "build": "node build/purify-css.js && node build/build.js",
-    "dev": "node build/dev-server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jarrekk/Jalpc.git"
-  },
-  "author": "Kun Jia",
+  "name": "shivam-kotwalia-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jarrekk/Jalpc/issues"
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
-  "homepage": "https://github.com/jarrekk/Jalpc#readme",
   "dependencies": {
-    "animate.css": "^3.5.2",
-    "bootstrap": "^3.3.6",
-    "chart.js": "^2.4.0",
-    "colors": "^1.1.2",
-    "components-font-awesome": "^4.7.0",
-    "font-mfizz": "^2.3.0",
-    "gritter": "^1.7.4",
-    "jquery": "^2.2.4",
-    "jquery-slimscroll": "^1.3.8",
-    "metismenu": "^2.5.2",
-    "normalize.css": "^4.2.0",
-    "pace-progress": "^1.0.2",
-    "peity": "^3.2.0",
-    "purify-css": "^1.1.9",
-    "wowjs": "^1.1.2"
-  },
-  "devDependencies": {
-    "clean-css": "^4.0.6",
-    "shelljs": "^0.7.6",
-    "uglify-js": "^2.7.5"
+    "@astrojs/rss": "^4.0.11",
+    "@astrojs/sitemap": "^3.4.0",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.1.10",
+    "astro": "^5.9.0",
+    "tailwindcss": "^4.1.10"
   }
 }

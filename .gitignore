@@ -1,7 +1,20 @@
-_site
-.sass-cache
-.jekyll-metadata
-.idea
+# build output
+dist/
+.output/
+
+# astro
+.astro/
+
+# dependencies
+node_modules/
+npm-debug.log*
+
+# environment
+.env
+.env.production
+
+# editors / os
+.idea/
+.vscode/
 .DS_Store
-node_modules
-npm-debug.log
+*.log

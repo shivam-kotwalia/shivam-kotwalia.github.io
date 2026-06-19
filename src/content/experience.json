@@ -1,0 +1,92 @@
+[
+  {
+    "id": "phonepe-pincode",
+    "role": "Associate Director, GenAI Strategy & Analytics",
+    "company": "PhonePe (Pincode)",
+    "companyUrl": "https://www.phonepe.com/about-us/",
+    "companyLogo": "/logos/phonepe.svg",
+    "companySource": "PhonePe describes itself as India's largest digital payments platform and a technology company expanding across financial and consumer-tech services.",
+    "location": "India",
+    "start": "2025",
+    "end": "Present",
+    "summary": "Leads GenAI strategy and analytics for PhonePe's quick-commerce business, Pincode, with a focus on growth and operational efficiency through AI-powered decision systems.",
+    "highlights": [
+      "Driving GenAI-led use cases across business workflows and operating decisions.",
+      "Partnering with business and product leadership to prioritize high-impact analytics initiatives.",
+      "Building scalable processes to translate AI prototypes into production value."
+    ],
+    "skills": ["GenAI", "Strategy", "Analytics", "Quick Commerce", "Product"]
+  },
+  {
+    "id": "tide-savings-commercial",
+    "role": "Head of Data Science, Savings & Commercial Banking",
+    "company": "Tide",
+    "companyUrl": "https://www.tide.co/about/",
+    "companyLogo": "/logos/tide.svg",
+    "companySource": "Tide positions itself as an all-in-one finance platform for small businesses, focused on helping them save time and money.",
+    "location": "UK / India",
+    "start": "2023",
+    "end": "2025",
+    "summary": "Built and led the data science function for Tide's Savings and Commercial Banking verticals, shaping data foundations and strategy in a fast-growing fintech environment.",
+    "highlights": [
+      "Established core data science capabilities for two strategic banking verticals.",
+      "Designed decision frameworks to improve customer experience and business outcomes.",
+      "Aligned analytics roadmaps with product and commercial priorities."
+    ],
+    "skills": ["Fintech", "Data Science", "Banking", "Commercial Strategy", "Leadership"]
+  },
+  {
+    "id": "meta-instagram-reels",
+    "role": "Data Science Manager, Instagram Reels",
+    "company": "Meta",
+    "companyUrl": "https://www.meta.com/about/",
+    "companyLogo": "/logos/meta.svg",
+    "companySource": "Meta states its mission as building the future of human connection through social and AI technologies.",
+    "location": "India",
+    "start": "2021",
+    "end": "2023",
+    "summary": "Supported the launch and growth of Instagram Reels in India through product analytics, experimentation, and go-to-market decision support.",
+    "highlights": [
+      "Contributed analytics leadership during a critical short-video growth phase.",
+      "Partnered with cross-functional teams on product growth and market rollout.",
+      "Enabled data-backed prioritization for Reels features and adoption initiatives."
+    ],
+    "skills": ["Product Analytics", "Experimentation", "Growth", "Consumer Tech"]
+  },
+  {
+    "id": "mckinsey",
+    "role": "Senior Business Analyst",
+    "company": "McKinsey & Company",
+    "companyUrl": "https://www.mckinsey.com/about-us/overview",
+    "companyLogo": "/logos/mckinsey.svg",
+    "companySource": "McKinsey describes itself as a global partnership helping clients accelerate sustainable and inclusive growth.",
+    "location": "India",
+    "start": "2018",
+    "end": "2021",
+    "summary": "Advised Fortune 500 clients on digital transformation, operational efficiency, and AI-enabled automation across multiple sectors.",
+    "highlights": [
+      "Worked closely with senior executives on strategy and execution choices.",
+      "Delivered analytics-driven recommendations for productivity and growth programs.",
+      "Contributed across fintech, FMCG, insurance, and energy engagements."
+    ],
+    "skills": ["Consulting", "Strategy", "Digital Transformation", "Operations"]
+  },
+  {
+    "id": "nagarro",
+    "role": "Deep Learning Engineer",
+    "company": "Nagarro",
+    "companyUrl": "https://www.nagarro.com/en/about-us",
+    "companyLogo": "/logos/nagarro.svg",
+    "companySource": "Nagarro is known for digital product engineering and IT services across industries including energy, telecom, banking, and insurance.",
+    "location": "India",
+    "start": "2015",
+    "end": "2018",
+    "summary": "Developed and deployed deep learning solutions for client projects, improving predictive performance and production AI adoption.",
+    "highlights": [
+      "Built model pipelines for real-world business use cases.",
+      "Worked across client contexts requiring practical AI deployment.",
+      "Strengthened foundations in applied deep learning engineering."
+    ],
+    "skills": ["Deep Learning", "Model Deployment", "AI Engineering"]
+  }
+]
