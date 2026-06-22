@@ -9,6 +9,9 @@ interface Props {
   description?: string;
   image?: string;
   article?: boolean;
+  hideHeader?: boolean;
+  hideFooter?: boolean;
+  mainClass?: string;
 }
 
 const {
@@ -16,6 +19,9 @@ const {
   description = site.tagline,
   image = '/og-default.svg',
   article = false,
+  hideHeader = false,
+  hideFooter = false,
+  mainClass = 'flex-1',
 } = Astro.props;
 
 const pageTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.role}`;
@@ -75,10 +81,10 @@ const ogImage = new URL(image, Astro.site ?? site.url).toString();
     </script>
   </head>
   <body class="flex min-h-screen flex-col font-sans">
-    <Header />
-    <main class="flex-1">
+    {!hideHeader && <Header />}
+    <main class={mainClass}>
       <slot />
     </main>
-    <Footer />
+    {!hideFooter && <Footer />}
   </body>
 </html>

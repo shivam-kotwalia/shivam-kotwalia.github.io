@@ -28,10 +28,20 @@ export const socials: SocialLink[] = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shivamkotwalia/', icon: 'linkedin' },
 ];
 
-export const nav = [
+export type NavItem =
+  | { label: string; href: string; children?: never }
+  | { label: string; href?: never; children: { label: string; href: string }[] };
+
+export const nav: NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
   { label: 'Advisory', href: '/advisory' },
+  {
+    label: 'Tools',
+    children: [
+      { label: 'Whiteboard', href: '/tools/whiteboard' },
+    ],
+  },
   { label: 'Blog', href: '/blog' },
 ];
 
