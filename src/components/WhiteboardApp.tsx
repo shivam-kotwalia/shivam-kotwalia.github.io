@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Excalidraw, convertToExcalidrawElements, exportToBlob } from '@excalidraw/excalidraw';
 import '@excalidraw/excalidraw/index.css';
-import WhiteboardToolbar from './WhiteboardToolbar';
+import WhiteboardToolbar from './WhiteboardToolbar.tsx';
 import {
   createBoard,
   deleteBoard,
