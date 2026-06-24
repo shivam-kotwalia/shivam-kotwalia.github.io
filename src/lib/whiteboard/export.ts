@@ -36,7 +36,7 @@ export function createShareUrl(scene: BoardScene, baseUrl?: string): string {
   const payload = compressToEncodedURIComponent(JSON.stringify(scene));
 
   if (!payload || payload.length > MAX_SHARE_LENGTH) {
-    throw new Error('   ');
+    throw new Error('This board is too large to share via URL. Please export JSON instead.');
   }
 
   const url = new URL(baseUrl || window.location.href);
