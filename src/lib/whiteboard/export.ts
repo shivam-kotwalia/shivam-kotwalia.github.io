@@ -5,7 +5,7 @@ import {
 import type { BoardScene } from './types';
 
 const SHARE_PARAM = 'wb';
-const MAX_SHARE_LENGTH = 1800;
+const MAX_SHARE_LENGTH = 9000;
 
 export function sceneToJson(scene: BoardScene): string {
   return JSON.stringify(scene, null, 2);
@@ -36,7 +36,7 @@ export function createShareUrl(scene: BoardScene, baseUrl?: string): string {
   const payload = compressToEncodedURIComponent(JSON.stringify(scene));
 
   if (!payload || payload.length > MAX_SHARE_LENGTH) {
-    throw new Error('This board is too large to share via URL. Please export JSON instead.');
+    throw new Error('   ');
   }
 
   const url = new URL(baseUrl || window.location.href);
