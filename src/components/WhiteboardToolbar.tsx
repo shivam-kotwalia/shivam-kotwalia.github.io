@@ -1,13 +1,15 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { BoardMeta, StickyColor } from '../lib/whiteboard/types';
 
 type IconName =
+  | 'boards'
   | 'new'
   | 'duplicate'
   | 'rename'
   | 'delete'
-  | 'share';
+  | 'share'
+  | 'sticky';
 
 function Icon({ name }: { name: IconName }) {
   const common = {
@@ -23,6 +25,14 @@ function Icon({ name }: { name: IconName }) {
   };
 
   switch (name) {
+    case 'boards':
+      return (
+        <svg {...common}>
+          <rect x="3" y="4" width="18" height="4" rx="1" />
+          <rect x="3" y="10" width="18" height="4" rx="1" />
+          <rect x="3" y="16" width="18" height="4" rx="1" />
+        </svg>
+      );
     case 'new':
       return (
         <svg {...common}>
@@ -59,6 +69,13 @@ function Icon({ name }: { name: IconName }) {
           <path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4" />
         </svg>
       );
+    case 'sticky':
+      return (
+        <svg {...common}>
+          <path d="M6 3h12a2 2 0 0 1 2 2v9l-5 5H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" />
+          <path d="M15 19v-5h5" />
+        </svg>
+      );
     default:
       return null;
   }
@@ -67,9 +84,6 @@ function Icon({ name }: { name: IconName }) {
 type WhiteboardToolbarProps = {
   boards: BoardMeta[];
   activeBoardId: string;
-  saveStatus: string;
-  collapsed: boolean;
-  onToggleCollapse: () => void;
   onSwitchBoard: (boardId: string) => void;
   onCreateBoard: () => void;
   onRenameBoard: () => void;
@@ -100,30 +114,31 @@ function ActionButton({
       : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800';
 
   return (
-    <button
-      type="button"
-      title={label}
-      aria-label={label}
-      onClick={onClick}
-      disabled={disabled}
-      className={[
-        'inline-flex h-9 w-9 items-center justify-center rounded-lg border text-xs font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-45',
-        base,
-      ]
-        .join(' ')
-        .trim()}
-    >
-      <span className="shrink-0">{icon}</span>
-    </button>
+    <div className="group relative z-[100]">
+      <button
+        type="button"
+        aria-label={label}
+        onClick={onClick}
+        disabled={disabled}
+        className={[
+          'inline-flex h-8 w-8 items-center justify-center rounded-lg border text-xs font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-45',
+          base,
+        ]
+          .join(' ')
+          .trim()}
+      >
+        <span className="shrink-0">{icon}</span>
+      </button>
+      <div className="pointer-events-none absolute left-full top-1/2 z-[9999] ml-3 -translate-y-1/2 whitespace-nowrap rounded-lg border border-slate-200 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white opacity-0 shadow-xl transition-opacity group-hover:opacity-100 dark:border-slate-600 dark:bg-slate-700">
+        {label}
+      </div>
+    </div>
   );
 }
 
 export default function WhiteboardToolbar({
   boards,
   activeBoardId,
-  saveStatus,
-  collapsed,
-  onToggleCollapse,
   onSwitchBoard,
   onCreateBoard,
   onRenameBoard,
@@ -132,142 +147,81 @@ export default function WhiteboardToolbar({
   onAddSticky,
   onCopyShareLink,
 }: WhiteboardToolbarProps) {
+  const [showBoardDropdown, setShowBoardDropdown] = useState(false);
+  
   const activeBoard = useMemo(
     () => boards.find((board) => board.id === activeBoardId),
     [activeBoardId, boards],
   );
+  const activeIndex = useMemo(
+    () => boards.findIndex((board) => board.id === activeBoardId),
+    [activeBoardId, boards],
+  );
+
+  const addStickyQuick = () => {
+    const rawText = window.prompt('Sticky note text');
+    const text = rawText?.trim();
+
+    if (!text) {
+      return;
+    }
+
+    onAddSticky(text, 'amber');
+  };
 
   return (
     <aside
-      className={[
-        'h-full rounded-3xl border border-slate-200/80 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-900/80',
-        collapsed ? 'p-2' : 'p-4',
-      ]
-        .join(' ')
-        .trim()}
+      className="relative z-50 h-full overflow-visible rounded-3xl border border-slate-200/80 bg-white/90 p-1 backdrop-blur dark:border-slate-800 dark:bg-slate-900/80"
     >
-      <div className={collapsed ? 'space-y-2' : 'space-y-5'}>
-        <section>
-          <div className="mb-2 flex items-center justify-between gap-2">
-            {!collapsed && (
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-700 dark:text-brand-400">
-                Boards
-              </p>
-            )}
-            <button
-              type="button"
-              onClick={onToggleCollapse}
-              title={collapsed ? 'Expand panel' : 'Collapse panel'}
-              className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
-            >
-              {collapsed ? '>>' : '<<'}
-            </button>
-          </div>
-
-          {collapsed ? (
-            <div className="space-y-2">
-              <div className="rounded-xl border border-slate-200/80 bg-slate-50 px-2 py-2 text-center text-xs font-semibold text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
-                {activeBoard?.name ? activeBoard.name.slice(0, 2).toUpperCase() : 'B'}
+      <div className="flex h-full flex-col items-center gap-1">
+        <div className="group relative">
+          <button
+            type="button"
+            onClick={() => setShowBoardDropdown(!showBoardDropdown)}
+            className="rounded-xl border border-slate-200/80 bg-slate-50 px-1.5 py-1.5 text-center text-[10px] font-semibold text-slate-600 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+            title={`${activeBoard?.name || 'Board'} (${activeIndex + 1}/${boards.length})`}
+          >
+            {activeBoard?.name ? activeBoard.name.slice(0, 2).toUpperCase() : 'B'}
+          </button>
+          
+          {showBoardDropdown && (
+            <div className="absolute left-full top-0 z-[9999] ml-2 w-48 rounded-xl border border-slate-200 bg-white py-1 shadow-xl dark:border-slate-700 dark:bg-slate-900">
+              <div className="px-3 py-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                Boards ({boards.length})
               </div>
-              <ActionButton
-                label="Share URL"
-                icon={<Icon name="share" />}
-                onClick={onCopyShareLink}
-              />
-            </div>
-          ) : (
-            <div className="space-y-2">
-              <select
-                value={activeBoardId}
-                onChange={(event) => onSwitchBoard(event.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-300 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-              >
-                {boards.map((board) => (
-                  <option key={board.id} value={board.id}>
-                    {board.name}
-                  </option>
-                ))}
-              </select>
-
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">{saveStatus}</p>
-
-              <div className="flex items-center gap-2 overflow-x-auto pb-1">
-                <ActionButton
-                  label="Share URL"
-                  icon={<Icon name="share" />}
-                  onClick={onCopyShareLink}
-                />
-                <ActionButton label="New" icon={<Icon name="new" />} onClick={onCreateBoard} />
-                <ActionButton label="Duplicate" icon={<Icon name="duplicate" />} onClick={onDuplicateBoard} />
-                <ActionButton label="Rename" icon={<Icon name="rename" />} onClick={onRenameBoard} />
-                <ActionButton
-                  label="Delete"
-                  icon={<Icon name="delete" />}
-                  onClick={onDeleteBoard}
-                  tone="danger"
-                  disabled={boards.length <= 1}
-                />
-              </div>
+              {boards.map((board) => (
+                <button
+                  key={board.id}
+                  onClick={() => {
+                    onSwitchBoard(board.id);
+                    setShowBoardDropdown(false);
+                  }}
+                  className={[
+                    'w-full px-3 py-2 text-left text-sm transition-colors',
+                    board.id === activeBoardId
+                      ? 'bg-brand-50 font-semibold text-brand-700 dark:bg-slate-800 dark:text-brand-400'
+                      : 'text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800',
+                  ].join(' ')}
+                >
+                  {board.name}
+                </button>
+              ))}
             </div>
           )}
-        </section>
+        </div>
 
-        {!collapsed && (
-          <section>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-700 dark:text-brand-400">
-              Sticky On Board
-            </p>
-            <form
-              className="mt-3 space-y-2"
-              onSubmit={(event) => {
-                event.preventDefault();
-
-                const form = event.currentTarget;
-                const textInput = form.elements.namedItem('sticky-text') as HTMLInputElement | null;
-                const colorInput = form.elements.namedItem('sticky-color') as HTMLSelectElement | null;
-
-                if (!textInput || !colorInput) {
-                  return;
-                }
-
-                const text = textInput.value.trim();
-
-                if (!text) {
-                  return;
-                }
-
-                onAddSticky(text, colorInput.value as StickyColor);
-                textInput.value = '';
-              }}
-            >
-              <textarea
-                name="sticky-text"
-                placeholder="Type a short note..."
-                rows={3}
-                className="w-full resize-none rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-300 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-              ></textarea>
-              <div className="flex items-center gap-2">
-                <select
-                  name="sticky-color"
-                  className="min-w-0 flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-300 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-                  defaultValue="amber"
-                >
-                  <option value="amber">Amber</option>
-                  <option value="mint">Mint</option>
-                  <option value="blue">Blue</option>
-                  <option value="rose">Rose</option>
-                </select>
-                <button
-                  type="submit"
-                  className="rounded-xl bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-brand-600 dark:bg-white dark:text-slate-900 dark:hover:bg-brand-400"
-                >
-                  Add to Board
-                </button>
-              </div>
-            </form>
-          </section>
-        )}
-
+        <ActionButton label="Share URL" icon={<Icon name="share" />} onClick={onCopyShareLink} />
+        <ActionButton label="New" icon={<Icon name="new" />} onClick={onCreateBoard} />
+        <ActionButton label="Duplicate" icon={<Icon name="duplicate" />} onClick={onDuplicateBoard} />
+        <ActionButton label="Rename" icon={<Icon name="rename" />} onClick={onRenameBoard} />
+        <ActionButton
+          label="Delete"
+          icon={<Icon name="delete" />}
+          onClick={onDeleteBoard}
+          tone="danger"
+          disabled={boards.length <= 1}
+        />
+        <ActionButton label="Add Sticky" icon={<Icon name="sticky" />} onClick={addStickyQuick} />
       </div>
     </aside>
   );

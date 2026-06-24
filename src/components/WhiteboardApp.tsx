@@ -67,9 +67,8 @@ export default function WhiteboardApp() {
     files: {} as Record<string, unknown>,
   }));
   const [canvasVersion, setCanvasVersion] = useState(0);
-  const [saveStatus, setSaveStatus] = useState('Initializing...');
+  const [, setSaveStatus] = useState('Initializing...');
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const [leftCollapsed, setLeftCollapsed] = useState(false);
   const [rightCollapsed, setRightCollapsed] = useState(false);
 
   const saveTimerRef = useRef<number | null>(null);
@@ -77,13 +76,9 @@ export default function WhiteboardApp() {
   const sceneRef = useRef<BoardScene>(buildDefaultScene());
   const activeBoardIdRef = useRef('');
 
-  const panelLayoutClass = leftCollapsed
-    ? rightCollapsed
-      ? 'xl:grid-cols-[70px_minmax(0,1fr)_70px]'
-      : 'xl:grid-cols-[70px_minmax(0,1fr)_240px]'
-    : rightCollapsed
-      ? 'xl:grid-cols-[280px_minmax(0,1fr)_70px]'
-      : 'xl:grid-cols-[280px_minmax(0,1fr)_240px]';
+  const panelLayoutClass = rightCollapsed
+    ? 'xl:grid-cols-[50px_minmax(0,1fr)_50px]'
+    : 'xl:grid-cols-[50px_minmax(0,1fr)_240px]';
 
   const refreshBoardList = useCallback(() => {
     setBoards(getBoards());
@@ -141,10 +136,8 @@ export default function WhiteboardApp() {
     });
     setCanvasVersion((version) => version + 1);
     setSaveStatus(sharedScene ? 'Loaded from share link' : 'Autosave ready');
-    const storedLeft = window.localStorage.getItem('whiteboard:left-collapsed:v1');
     const storedRight = window.localStorage.getItem('whiteboard:right-collapsed:v1');
 
-    setLeftCollapsed(storedLeft === null ? true : storedLeft === '1');
     setRightCollapsed(storedRight === null ? false : storedRight === '1');
 
     const applyTheme = () => {
@@ -178,14 +171,6 @@ export default function WhiteboardApp() {
     });
     setCanvasVersion((version) => version + 1);
     setSaveStatus('Board loaded');
-  }, []);
-
-  const toggleLeftPanel = useCallback(() => {
-    setLeftCollapsed((prev) => {
-      const next = !prev;
-      window.localStorage.setItem('whiteboard:left-collapsed:v1', next ? '1' : '0');
-      return next;
-    });
   }, []);
 
   const toggleRightPanel = useCallback(() => {
@@ -340,7 +325,7 @@ export default function WhiteboardApp() {
       const base = `${window.location.origin}${window.location.pathname}`;
       const url = createShareUrl(sceneRef.current, base);
       await navigator.clipboard.writeText(url);
-      setSaveStatus('Share URL copied to clipboard');
+      window.alert('Share URL copied to clipboard!');
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Could not create share URL.';
       window.alert(message);
@@ -348,13 +333,10 @@ export default function WhiteboardApp() {
   }, []);
 
   return (
-    <div className={`grid gap-3 ${panelLayoutClass}`}>
+    <div className={`grid gap-1.5 ${panelLayoutClass}`}>
       <WhiteboardToolbar
         boards={boards}
         activeBoardId={activeBoardId}
-        saveStatus={saveStatus}
-        collapsed={leftCollapsed}
-        onToggleCollapse={toggleLeftPanel}
         onSwitchBoard={switchBoard}
         onCreateBoard={createBoardAction}
         onRenameBoard={renameBoardAction}
@@ -364,8 +346,8 @@ export default function WhiteboardApp() {
         onCopyShareLink={copyShareLink}
       />
 
-      <div className="space-y-3">
-        <section className="h-[76vh] min-h-[620px] overflow-hidden rounded-3xl border border-slate-200/80 bg-white dark:border-slate-800 dark:bg-slate-950">
+      <div className="space-y-1.5">
+        <section className="h-[93vh] min-h-[620px] overflow-hidden rounded-3xl border border-slate-200/80 bg-white dark:border-slate-800 dark:bg-slate-950">
           <Excalidraw
             key={`${activeBoardId}-${canvasVersion}`}
             initialData={initialData as never}
@@ -407,7 +389,7 @@ export default function WhiteboardApp() {
           <div className="flex items-center justify-between gap-2">
             {!rightCollapsed && (
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-700 dark:text-brand-400">
-                Right Panel
+                INFO
               </p>
             )}
             <button
@@ -422,7 +404,7 @@ export default function WhiteboardApp() {
 
           {rightCollapsed ? (
             <div className="rounded-xl border border-slate-200/80 bg-slate-50 px-2 py-2 text-center text-xs font-semibold text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
-              RP
+              I
             </div>
           ) : (
             <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 p-4 text-sm text-slate-600 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-300">
